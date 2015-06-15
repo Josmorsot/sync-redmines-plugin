@@ -1,0 +1,3 @@
+= sync_redmines_plugin
+
+Description goes here
