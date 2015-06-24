@@ -10,6 +10,14 @@ class IssueForm
 		@due_date = json_issue["due_date"].to_s
 		@done_ratio = json_issue["done_ratio"].to_i
 		@description = json_issue["description"].to_s
+		@custom_fields_json = json_issue["custom_fields"]
+		@custom_fields = []
+		
+		begin
+			@fixed_version = json_issue["fixed_version"]["id"]
+		rescue
+		end
+
 		begin
 			@parent = json_issue["parent"]["id"]
 		rescue
@@ -55,6 +63,10 @@ class IssueForm
 		@description
 	end
 
+	def fixed_version
+		@fixed_version
+	end
+
 	def parent
 		@parent
 	end
@@ -65,6 +77,14 @@ class IssueForm
 
 	def category
 		@category
+	end
+
+	def custom_fields_json
+		@custom_fields_json
+	end
+
+	def custom_fields
+		@custom_fields
 	end
 
 end
