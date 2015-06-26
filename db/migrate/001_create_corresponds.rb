@@ -4,6 +4,7 @@ class CreateCorresponds < ActiveRecord::Migration
       t.integer :id_local
       t.integer :id_remote
       t.integer :remote_type
+      
     end
   end
 end
