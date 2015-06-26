@@ -9,9 +9,9 @@ class ConsumeController < ApplicationController
     find_issue_statuses
   	res=find_projects
    
-    res.each do |project|
-      create_fixed_version project.identifier
-    end
+    #res.each do |project|
+    #  create_fixed_version project.identifier
+    #end
 
     res.each do |project|
       save_issues project
@@ -204,10 +204,8 @@ class ConsumeController < ApplicationController
     end
     time_entries_activities.each do |time_entry|
       activity = time_entry["activity"]["name"]
-      puts "activity: "+activity
       tea = TimeEntryActivity.find_by(:name=>activity)
       if tea == nil
-        puts "activity: "+activity
         tea = TimeEntryActivity.create(:name=>activity)
         tea.save
         puts tea.errors.full_messages
@@ -222,9 +220,7 @@ class ConsumeController < ApplicationController
     issues += find_issues project.identifier,0,"closed"
     parents_na=Hash.new
     project_db=Project.find_by(:identifier=>project.identifier)
-    puts "LENGTH: "+issues.length.to_s
     issues.each do |issue|
-      #find_time_entries issue.id 
       #Recorremos las issues y les añadimos todos los campos necesarios
       puts "*--------->  FINDING ISSUE WITH SUBJECT:"+issue.subject
       correspond = Correspond.where(:id_remote=>issue.id, :remote_type=>1).first_or_create
@@ -266,7 +262,6 @@ class ConsumeController < ApplicationController
 
       issue_db.save
       if issue.fixed_version!=nil
-        puts issue.fixed_version
         id_local_version=Correspond.where(:id_remote=>issue.fixed_version, :remote_type=>3).first.id_local
         version = Version.find_by(:id=>id_local_version)
         issue_db.fixed_version = version
